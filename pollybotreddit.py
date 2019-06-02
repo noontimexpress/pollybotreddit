@@ -38,10 +38,10 @@ def generate_hash(content):
 	hasher.update(repr(content).encode('utf-8'))
 	return hasher.hexdigest()	
 
-def lambda_handler(event, num, content):
+def lambda_handler(event, content):
 	slashr = event.get('subreddit') 
 	voice = event.get('voice', 'personVoice')
-	num = num 
+	num = int(event.get('numOfEntries'))
 	stickycounter = 0
 
 	reddit = praw.Reddit('bot1')
@@ -68,6 +68,4 @@ def lambda_handler(event, num, content):
 		's3': "{}/{}/{}/{}".format(s3.meta.endpoint_url, BUCKET_NAME, name, forspeech)
 		}
 
-	print (item)
-
-lambda_handler({'subreddit':"movies",'voice':'Brian'},4, None)
+	return (item)
